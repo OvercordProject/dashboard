@@ -1,0 +1,11 @@
+extends partials/head
+
+block content
+  .main-container.pa
+    .form-container
+      h2.form-title Create a team
+      if (!user.team)
+        include partials/teamForm
+        a.btn#send-team-data(onClick="sendTeamData(false)") Create Team
+      else
+        p(style="color: #fff; padding: 20px") Humm it looks like you are already in a team

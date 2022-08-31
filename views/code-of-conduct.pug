@@ -1,0 +1,23 @@
+extends partials/head
+
+block content
+  .main-container.pa
+    h3.main-header By using this website and joining the Discord server, you agree to the following code of conduct.
+    ul(style="margin-left: 40px")
+      li Read and agree the TOS AND the Discord Guidelines
+      br
+      li Advertising is forbidden on the server and in private messages
+      br
+      li Any form of troll/spam/flood is strictly forbidden in vocal and writing
+      br
+      li Offensive content is prohibited
+      br
+      li Insults/defamation/harassment are prohibited
+      br
+      li Stalking and sharing of a person's personal information is prohibited
+      br
+      li It is forbidden to overuse bots
+      br
+      li The staff reserves the right to decide on the consequences of your actions if they judge that they are harmful to the server
+    if (!codeOfConduct)
+      a.btn(href="/?codeOfConduct=true", style="margin-top: 40px") Accept

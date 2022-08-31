@@ -1,0 +1,7 @@
+extends partials/head
+
+block content
+  main(role="main")
+    h1= message
+    h2= error.status
+    pre #{error.stack}

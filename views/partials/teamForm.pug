@@ -1,0 +1,15 @@
+.form-content
+  .image-viewer
+    .team-image-border
+      img(src="/assets/images/discord.png", alt="team image").team-image
+  .fields
+    .input-container
+      input#team-name.input(type="text", placeholder=" ", maxlength="25" onkeyup=`inputKeyUp(event, ${edit})`)
+      .cut Team name
+      label.placeholder(for="teamName") Team Name
+    .input-err#name-err
+    .input-container
+      input#team-image.input(type="text", placeholder=" ", maxlength="256" onkeyup=`inputKeyUp(event, ${edit})`)
+      .cut Image Url
+      label.placeholder(for="imgUrl") Image Url
+    .input-err#img-err

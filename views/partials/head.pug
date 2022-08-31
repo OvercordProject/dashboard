@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+    meta(name="description" content="Login to your Blizzard account and Discord for the Overcord server")
+    title #{pageTitle}#{titleSeperator}#{siteTitle}
+    link(href="/styles/main.css", rel="stylesheet")
+  body
+    .loader
+      .spinner
+    include nav.pug
+    .error-popup
+      .error-popup-content
+        h2 Error
+        p#err-message
+      .error-popup-close(onclick="hidePopupError()")
+    if (!privacyPolicy || !codeOfConduct)
+      .popup
+        .popup-content
+          p
+            | You need to accept our
+            a(href="/privacyPolicy")  privacy policy
+            |  and our
+            a(href="/codeOfConduct")  code of conduct
+            |  to use this service
+        .popup-content
+          .btn(onclick="hide()") Close
+          a.btn(href="/?privacyPolicy=true&codeOfConduct=true") Accept
+    block content
+    block scripts
+      script(type="text/javascript" src="http://code.jquery.com/jquery-latest.js")
+      script(src="/js/script.js")

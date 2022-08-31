@@ -1,0 +1,36 @@
+extends partials/head
+
+block content
+  .main-container.pa
+    h1
+      | Welcome to Overcord
+      if (fetchUser)
+        |  #{fetchUser.username}
+    .pre
+    .server-desc
+      p Overcord is a community discord server around the game Overwatch. Come and discover a whole new experience on discord with this server and its features that will push the limit between Discord and Overwatch.
+    .main-grid
+      .card
+        .card-img-container
+          .card-img
+            img(src="/assets/images/roles.png", alt="roles image")
+        .card-content
+          .card-title
+            h3 Rank Roles
+          p Get custom roles depending on your rank on Overwatch
+      .card
+        .card-img-container
+          .card-img
+            img(src="/assets/images/stats.png", alt="stats image")
+        .card-content
+          .card-title
+            h3 Stats
+          p The server offers a ranking system according to your activity
+      .card
+        .card-img-container
+          .card-img
+            img(src="/assets/images/team.png", alt="team image")
+        .card-content(style="font-size: 0.9rem")
+          .card-title
+            h3 Teams
+          p Overcord offers a team system to make friends in-game. Our goal is to make a match between the teams of the server

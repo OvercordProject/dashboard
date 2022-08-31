@@ -1,0 +1,32 @@
+extends partials/head
+
+mixin userRow(user)
+  - rank += 1
+  tr
+    td
+      p= rank
+    td
+      .user-section
+        img.user-pic(src= user.avatar, alt="user image" onerror="this.onerror=null; this.src='/assets/images/discord.png'")
+        a.user-name(href= `/users/${user.userid}`)= user.username + "#" +user.discriminator
+    td= user.level
+    td= user.xp
+
+block content
+  .main-container.pa
+    h1 Leaderboard
+    .pre
+    if (leader.length > 0)
+      table(style="margin: 0 auto")
+        thead
+          tr
+            th(scope="col") Rank
+            th(scope="col") User
+            th(scope="col") Level
+            th(scope="col") Xp
+        tbody
+          - rank = 0
+          each user in leader
+            +userRow(user)
+    else
+      div.no-data No data

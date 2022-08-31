@@ -1,0 +1,102 @@
+extends partials/head
+block content
+  .main-container.pa
+    .base-section
+      img.base-pic(src=fetchUser.image, alt="user image" onerror="this.onerror=null; this.src='/assets/images/discord.png'")
+      h1.base-title #{fetchUser.username}
+      if (fetchUser.id === user.discordId)
+        .btn-section
+          if (user.discordId)
+            a(href="/logout").btn
+              img.btn-icon(style="width: 20px" src="/assets/images/ds-logo.png", alt="discord logo")
+              p Logout
+          if (user.battleNetId)
+            a(href="/auth/battlenet/logout").btn
+              img.btn-icon(style="width: 20px" src="/assets/images/raw.png", alt="battlenet logo")
+              p Unlink
+          if (!user.isOnServer)
+            a(href="/auth/discord").btn
+              img.btn-icon(style="width: 20px" src="/assets/images/ds-logo.png", alt="discord logo")
+              p Join
+          else if (!user.battleNetId)
+            a(href="/auth/battlenet").btn
+              img.btn-icon(style="width: 20px" src="/assets/images/raw.png", alt="battlenet logo")
+              p Link
+    .pre
+    .main-grid
+      .card
+        if (fetchUser.rank === "Not found")
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement.png")
+          .card-content
+            .card-title
+              h3 Rank
+            p This user has no data yet
+        else if (fetchUser.rank === 1)
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement_1.png")
+          .card-content
+            .card-title
+              h3 Rank
+            p No way... this user is the first on the server ranking, he is very strong!
+        else if (fetchUser.rank === 2)
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement_2.png")
+          .card-content
+            .card-title
+              h3 Rank
+            p This user is the second on the server ranking, he is a handsome guy!
+        else if (fetchUser.rank === 3)
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement_3.png")
+          .card-content
+            .card-title
+              h3 Rank
+            p(style="font-size:13.5px") This user is the third on the server ranking, it's a small step for the server but a big step for his ego!
+        else
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement.png")
+          .card-content
+            .card-title
+              h3 Rank
+            p This user is #{fetchUser.rank}th on the server ranking
+        a(href=`/leaderboard`).card-btn
+          i.gg-arrow-right
+      .card
+        .card-img-container
+          .card-img
+            img(src="/assets/images/stats.png")
+        .card-content
+          .card-title
+            h3 Stats
+          .p
+            strong Level:
+            |  #{fetchUser.level || "No data"}
+          .p
+            strong Messages:
+            |  #{fetchUser.messages || "No data"}
+          .p
+            strong Vocal time:
+            |  #{fetchUser.vocal || "No data"}
+      .card
+        .card-img-container
+          .card-img
+            img(src="/assets/images/team.png")
+        .card-content
+          .card-title
+            h3 Team
+          if (!fetchUser.team)
+            .p This user does not have a team
+            if (fetchUser.id === user.discordId)
+              a(href="/team/create" style="margin-top: 10px; width: 140px").card-btn
+                p.btn-text Create a team
+          else
+            .p Name: #{fetchUser.team}
+        if (fetchUser.team)
+          a(href=`/teams/${fetchUser.team}`).card-btn
+            i.gg-arrow-right

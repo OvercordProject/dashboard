@@ -1,0 +1,97 @@
+extends partials/head
+
+block content
+  if (fetchTeam.name === user.team)
+    .popup-confirm-wrapper
+      .popup-confirm
+        h1 Are you sure?
+        p This action cannot be undone
+        .btn-wrapper
+          a.btn#yes Yes
+          a.btn#no No
+    .edit-team-panel
+      .edit-team-panel-wrapper
+        .close-edit-team-panel(onclick="hidePanel()")
+        .edit-team-panel-header
+          h3 Team Settings
+        - const edit = true;
+        .edit-team-panel-body
+          include partials/teamForm
+          a.btn#send-team-data(onclick="sendTeamData(true)") Save
+          a.btn#delete-team(onclick="deleteTeam()") Delete Team
+  .main-container.pa
+    .base-section
+      img.base-pic(src=fetchTeam.image, alt="team image" onerror="this.onerror=null; this.src='/assets/images/discord.png'")
+      h1.base-title #{fetchTeam.name}
+      if (fetchTeam.name === user.team)
+        .btn-section
+          a.btn#edit-team(onclick="showPanel()") Edit team
+    .pre
+    .main-grid
+      .card
+        if (fetchTeam.rank === "Not found")
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement.png", alt="achievement image")
+          .card-content
+            .card-title
+              h3 Rank
+            p This team is not ranked yet
+        else if (fetchTeam.rank === 1)
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement_1.png", alt="achievement image")
+          .card-content
+            .card-title
+              h3 Rank
+            p No way... this team is the first on the server ranking, she is very strong!
+        else if (fetchTeam.rank === 2)
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement_2.png", alt="achievement image")
+          .card-content
+            .card-title
+              h3 Rank
+            p This team is the second on the server ranking!
+        else if (fetchTeam.rank === 3)
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement_3.png", alt="achievement image")
+          .card-content
+            .card-title
+              h3 Rank
+            p(style="font-size:13.5px") This team is the third on the server ranking!
+        else
+          .card-img-container
+            .card-img
+              img(src="/assets/images/achievement.png", alt="achievement image")
+          .card-content
+            .card-title
+              h3 Rank
+            p This team is #{fetchTeam.rank}th on the server ranking
+        a(href=`/teams/leaderboard`).card-btn
+          i.gg-arrow-right
+      .card
+        .card-img-container
+          .card-img
+            img(src="/assets/images/stats.png", alt="stats image")
+        .card-content
+          .card-title
+            h3 Stats
+          .p
+            strong Sr:
+            |  #{fetchTeam.sr || "No data"}
+          .p
+            strong Wins:
+            |  #{fetchTeam.wins || "No data"}
+          .p
+            strong Losses:
+            |  #{fetchTeam.losses || "No data"}
+      .card
+        .card-img-container
+          .card-img
+            img(src="/assets/images/team.png", alt="team image")
+        .card-content
+          .card-title
+            h3 Members
+          .p #{fetchTeam.leader.username}

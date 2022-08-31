@@ -1,0 +1,17 @@
+mixin navItem(href, name)
+  - var active = href === path;
+  li.nav-item(class=`${active && "active"}`)
+    a.nav-link(href=href)= name
+    if active
+      span.sr-only (current)
+
+nav
+  .nav-content
+    a(href="/")
+      img.nav-logo(src="/assets/images/logo.png",)
+  .nav-content
+    +navItem("/", "Home")
+    if (user)
+      +navItem(`/users/${user.discordId}`, "Profile")
+    else
+      +navItem(`/auth/discord`, "Login")

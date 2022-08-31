@@ -1,0 +1,35 @@
+extends partials/head
+
+block content
+  .main-container.pa
+    h3.main-header This website collects certain data from third party services
+    br
+    h4 Data collected for the operation of this site:
+    br
+    h4 BattleNet
+    p This website uses OAuth to allow you to log into your BattleNet account.
+      |  The following information is collected from your profile:
+      ul(style="margin-left: 43px")
+        li Blizzard Battle.net username &amp; Id
+    br
+    h4 Discord
+    p This website uses OAuth2.0 to allow you to log into your Discord account.
+      |  The following information is collected from your profile:
+      ul(style="margin-left: 43px")
+        li Discord username &amp; Id
+        li Avatar
+    br
+    h4 Storage
+    p The data is collected in a database that resides on the server owned by
+      a(href="https://pulseheberg.com/", target="_blank")  Pulseheberg.
+      |  Data is never shared with external parties and is not intended to be made available outside the server.
+    br
+    h4 Avertissement
+    p
+      strong
+        a.link(href="/") overcord.space
+      |  will never ask you for your password!
+    strong Contact:
+    a.link(href="https://discord.gg/aJAvF2Dj45")  Server Administrator
+    if (!privacyPolicy)
+      a.btn(href="/?privacyPolicy=true", style="margin-top: 40px") Accept
