@@ -1,13 +1,13 @@
 /* eslint-disable no-await-in-loop */
 const express = require('express');
 const adapter = require('../discord/adapter');
-const userInfos = require('../../db/modules/queries/userinfos');
+const queries = require('../../db/modules/queries');
 
 const router = express.Router();
 
 // GET leaderboard page.
 router.get('/', async (req, res) => {
-  const leader = await userInfos.leaderboard();
+  const leader = await queries.user.leaderboard();
 
   console.log(leader);
 

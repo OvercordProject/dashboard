@@ -1,7 +1,7 @@
 extends partials/head
 
 block content
-  if (fetchTeam.name === user.team)
+  if (fetchTeam.id === user.team)
     .popup-confirm-wrapper
       .popup-confirm
         h1 Are you sure?
@@ -21,9 +21,9 @@ block content
           a.btn#delete-team(onclick="deleteTeam()") Delete Team
   .main-container.pa
     .base-section
-      img.base-pic(src=fetchTeam.image, alt="team image" onerror="this.onerror=null; this.src='/assets/images/discord.png'")
+      img.base-pic(src=fetchTeam.img, alt="team image" onerror="this.onerror=null; this.src='/assets/images/discord.png'")
       h1.base-title #{fetchTeam.name}
-      if (fetchTeam.name === user.team)
+      if (fetchTeam.id === user.team)
         .btn-section
           a.btn#edit-team(onclick="showPanel()") Edit team
     .pre

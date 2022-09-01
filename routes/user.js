@@ -1,6 +1,6 @@
 const express = require('express');
 
-const userInfos = require('../../db/modules/queries/userinfos');
+const queries = require('../../db/modules/queries');
 const adapter = require('../discord/adapter');
 
 const router = express.Router();
@@ -17,10 +17,11 @@ router.get('/:id', async (req, res) => {
     size: 64,
   });
 
-  const userData = await userInfos.fetch(req.params.id);
+  const userData = await queries.user.fetch(req.params.id);
   if (userData) {
-    fetchUser.team = userData.team;
-    fetchUser.rank = await userInfos.leaderboard({ search: fetchUser.id });
+    const userTeam = userData.team ? await queries.team.fetch(userData.team) : null;
+    fetchUser.team = userTeam ? userTeam.name : null;
+    fetchUser.rank = await queries.user.leaderboard({ search: fetchUser.id });
     fetchUser.messages = userData.messages;
     fetchUser.vocal = userData.vocal;
     fetchUser.level = userData.level;

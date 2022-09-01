@@ -10,7 +10,7 @@ const favicon = require('serve-favicon');
 const path = require('path');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const settings = require('../db/settings');
+const settings = require('./settings');
 const models = require('../db/models');
 
 // Basic routes

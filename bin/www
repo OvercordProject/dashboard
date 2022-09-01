@@ -6,7 +6,7 @@ const debug = require('debug')('overcord:www');
 const fs = require('fs');
 const http = require('http');
 const models = require('../../db/models');
-const settings = require('../../db/settings');
+const settings = require('../settings');
 const app = require('../app');
 
 function normalizePort(val) {
@@ -28,8 +28,8 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-if (!fs.existsSync(settings.db.path)) {
-  fs.mkdirSync(settings.db.path);
+if (!fs.existsSync(process.env.DB_PATH)) {
+  fs.mkdirSync(process.env.DB_PATH);
 }
 
 function onError(error) {

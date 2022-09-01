@@ -35,6 +35,6 @@
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs --fix --ignore-path ./.gitignore"
   },
   "author": "X3ne",
-  "license": "ISC",
+  "license": "MIT",
   "description": "Dashboard for overcord.space"
 }

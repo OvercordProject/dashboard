@@ -2,8 +2,7 @@ const express = require('express');
 const filter = require('leo-profanity');
 const frenchBadwordsList = require('french-badwords-list');
 
-const userInfos = require('../../../db/modules/queries/userinfos');
-const teams = require('../../../db/modules/queries/teams');
+const queries = require('../../../db/modules/queries');
 
 const router = express.Router();
 
@@ -13,7 +12,7 @@ filter.add(frenchBadwordsList.array);
 
 // POST teams page.
 router.post('/', async (req, res) => {
-  const profile = await userInfos.fetch(req.user.discordId);
+  const profile = await queries.user.fetch(req.user.discordId);
 
   // eslint-disable-next-line prefer-const
   let teamName = req.body.name;
@@ -35,7 +34,7 @@ router.post('/', async (req, res) => {
         message: 'Invalid team name',
       });
     }
-    const team = await teams.fetch(teamName);
+    const team = await queries.team.fetch(teamName);
 
     if (team) {
       return res.status(400).json({
@@ -45,23 +44,25 @@ router.post('/', async (req, res) => {
   }
 
   if (profile.team) {
-    const userTeam = await teams.fetch(profile.team);
+    const userTeam = await queries.team.fetch(profile.team);
     if (req.user.discordId === userTeam.leaderId) {
       if (teamName) {
-        await teams.updateData(profile.team, 'name', teamName);
-        await userInfos.updateData(req.user.discordId, 'team', teamName); // todo: rewrite all teams queries to work with id
+        await userTeam.edit('name', teamName);
       }
       if (teamImage && teamImage !== '/assets/images/discord.png') {
-        await teams.updateData(profile.team, 'img', teamImage);
+        await userTeam.edit('img', teamImage);
       }
     }
     // todo: change after db queries are done
-    const newTeam = teamName ? await teams.fetch(teamName) : userTeam;
+    const newTeam = teamName ? await queries.team.fetch(teamName) : userTeam;
     return res.status(200).json(newTeam);
   }
 
-  const newTeam = await teams.create(teamName, teamImage, req.user.discordId);
-  await userInfos.updateData(req.user.discordId, 'team', newTeam.name);
+  const newTeam = await queries.team.create(req.user.discordId, {
+    name: teamName,
+    image: teamImage,
+  });
+  await profile.edit('team', newTeam.id);
 
   if (!teamName) {
     return res.status(400).json({ message: 'Name is required' });
@@ -71,7 +72,7 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/', async (req, res) => {
-  const profile = await userInfos.fetch(req.user.discordId);
+  const profile = await queries.user.fetch(req.user.discordId);
 
   if (!profile) {
     return res.status(401).json({
@@ -85,7 +86,7 @@ router.delete('/', async (req, res) => {
     });
   }
 
-  const team = await teams.fetch(profile.team);
+  const team = await queries.team.fetch(profile.team);
 
   if (team.leaderId !== req.user.discordId) {
     return res.status(403).json({
@@ -93,8 +94,8 @@ router.delete('/', async (req, res) => {
     });
   }
 
-  await teams.delete(profile.team);
-  await userInfos.updateData(req.user.discordId, 'team', null);
+  await team.delete();
+  await profile.edit('team', null);
 
   return res.status(200).json({
     message: 'Team successfully deleted',
